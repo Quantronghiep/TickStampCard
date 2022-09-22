@@ -17,6 +17,7 @@ return new class extends Migration
             $table->increments('id');
             $table->string('app_name');
             $table->string('logo')->nullable();
+            $table->timestamps();
         });
     }
 

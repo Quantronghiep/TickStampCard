@@ -12,6 +12,10 @@ class Application extends Model
     protected $primaryKey = 'id';
     public $timestamps = true;
 
+       protected $fillable = [
+       'app_name', 'logo'
+   ];
+
     //one app has many admins
     public function admins()
     {
