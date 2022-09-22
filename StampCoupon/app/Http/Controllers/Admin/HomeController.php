@@ -6,7 +6,7 @@ class HomeController
 {
     public function index()
     {
-        return view('admin.layouts.master');
+        return view('admin.layouts.main');
     }
 
     public function detail()
