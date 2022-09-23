@@ -50,9 +50,9 @@ class ApplicationController extends Controller
         return view('admin.application.edit')->with('app',$app);
     }
 
-    public function update(Request $request, $id)
+    public function update(ApplicationRequest $request, $id)
     {
-        
+        $request->validated();
         $app = new Application();
         $params = $request->all();
         $app->updateApp($params,$id);
