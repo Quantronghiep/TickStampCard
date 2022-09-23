@@ -17,7 +17,7 @@ class Application extends Model
        'app_name', 'logo'
    ];
 
-    public function create($params = []){
+    public function createApp($params = []){
         $this->app_name = $params['app_name'];
         $this->logo = $params['logo'];
         if(!empty($this->logo)){
