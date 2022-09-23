@@ -35,7 +35,7 @@ class ApplicationController extends Controller
         $params = $request->all();
 
         $app = new Application();
-        $app->create($params);
+        $app->createApp($params);
         return redirect('admin/application');
 ;    }
 

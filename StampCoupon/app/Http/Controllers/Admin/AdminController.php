@@ -4,72 +4,72 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Admin;
+use App\Models\Application;
+use App\Http\Requests\AdminRequest;
+use Illuminate\Support\Facades\App;
 
 class AdminController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        return view('admin.admin.index');
+        $admins = new Admin();
+        $admins = $admins->indexAdmin();
+        // dd($admins);
+        return view('admin.admin.index',[
+            'admins' => $admins,
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
-        //
+        $apps = Application::all();
+        return view('admin.admin.create',[
+            'apps' => $apps,
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(AdminRequest $request)
     {
-        //
+        $request->validated();
+        $params = $request->all();
+       
+        $admin = new Admin();
+        $admin->createAdmin($params);
+        return redirect('admin/admin');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        //
+        $admin = Admin::find($id);
+        $apps = Application::all();
+        // $app =  Admin::with('application')
+        // ->join('applications', 'admins.app_id', '=', 'applications.id')
+        // ->where('admins.app_id','=',$id)
+        // ->get();
+        // dd($admin);
+        return view('admin.admin.edit',[
+            'admin' => $admin,
+            'apps' => $apps,
+        ]);
+        
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+
+    public function update(AdminRequest $request, $id)
     {
-        //
+        $request->validated();
+        $admin = new Admin();
+        $params = $request->all();
+        $admin->updateAdmin($params,$id);
+        return redirect('admin/admin')->with('success','Update success!');
     }
 
     /**
@@ -80,6 +80,7 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Admin::where('id',$id)->delete();
+        return redirect('admin/admin')->with('success','Delete success!');
     }
 }
