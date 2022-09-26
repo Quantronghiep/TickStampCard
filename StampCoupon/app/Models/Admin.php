@@ -20,13 +20,13 @@ class Admin extends Model
 
    public function indexAdmin(){
     // join in eloquent
-        // return Admin::with('application')
-        //     ->join('applications', 'admins.app_id', '=', 'applications.id')
-        //     ->get();
-            return DB::table('admins')
-                    ->join('applications','admins.app_id','=','applications.id')
-                    ->select('applications.app_name', 'admins.*')
-                    ->get();
+        return Admin::with('application')
+            ->join('applications', 'admins.app_id', '=', 'applications.id')
+            ->get(['applications.app_name', 'admins.*']);
+            // return DB::table('admins')
+            //         ->join('applications','admins.app_id','=','applications.id')
+            //         ->select('applications.app_name', 'admins.*')
+            //         ->get();
    }
 
    public function createAdmin($params = []){
