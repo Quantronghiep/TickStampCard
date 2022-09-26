@@ -18,10 +18,12 @@ use Illuminate\Http\Request;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/admin/login',[LoginController::class,'login'])->name('admin.login');
+Route::post('/check_login', [LoginController::class, 'check_login'])->name('check_login');
+Route::get('/logout', [LoginController::class, 'logout'])->name('admin.logout');
 
-Route::prefix('admin')->group(function () {
-    Route::get('login',[LoginController::class,'login'])->name('admin.login');
-    Route::get('index', [HomeController::class, 'index'])->name('admin.index');
+Route::prefix('admin')->middleware('auth:admin')->group(function () {
+    Route::get('index', [HomeController::class, 'index'])->name('admin.home');
     Route::resource('/admin', AdminController::class);
     Route::resource('/application', ApplicationController::class);
 });

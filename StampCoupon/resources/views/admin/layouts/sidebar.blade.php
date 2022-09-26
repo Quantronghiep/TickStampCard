@@ -8,14 +8,21 @@
     <!-- Sidebar -->
     <div class="sidebar">
       <!-- Sidebar user panel (optional) -->
+      @if(auth()->check())
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
           <img src="{{asset('admin/dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+          <a href="#" class="d-block">{{auth()->user()->email}}</a>
         </div>
-      </div>
+        
+        </div>
+        <div>
+
+          <a href="{{ route('admin.logout') }}" class="btn btn-block btn-danger btn-sm">Logout</a>
+        </div>
+      @endif
 
       <!-- SidebarSearch Form -->
       <div class="form-inline">
@@ -34,6 +41,17 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
+               @if(auth()->check() && auth()->user()->type == 1)
+               <div class="form-group">
+                <label for="app_id">App quản lý</label>
+                <select name="app_id" class="form-control" id="app_id">
+                    @foreach($apps as $app)
+                    <option value="{{ $app->id }}" >
+                        {{ $app->app_name }}
+                    </option>
+                    @endforeach
+                </select>
+            </div>
                <li class="nav-item">
                 <a href="{{ route('admin.index') }}" class="nav-link">
                   <i class="nav-icon far fa-image"></i>
@@ -47,6 +65,40 @@
                   <i class="nav-icon far fa-image"></i>
                   <p>
                     Application
+                  </p>
+                </a>
+              </li>
+             
+              @endif
+              <li class="nav-item">
+                <a href="{{ route('admin.index') }}" class="nav-link">
+                  <i class="nav-icon far fa-image"></i>
+                  <p>
+                    Coupons
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('admin.index') }}" class="nav-link">
+                  <i class="nav-icon far fa-image"></i>
+                  <p>
+                    Stamps
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('admin.index') }}" class="nav-link">
+                  <i class="nav-icon far fa-image"></i>
+                  <p>
+                    Store
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('admin.index') }}" class="nav-link">
+                  <i class="nav-icon far fa-image"></i>
+                  <p>
+                    Export Coupon
                   </p>
                 </a>
               </li>

@@ -1,21 +1,16 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+use App\Models\Application;
 
 class HomeController
 {
     public function index()
     {
-        return view('admin.layouts.main');
+        $apps = Application::all();
+        return view('admin.layouts.main',[
+            'apps' => $apps,
+        ]);
     }
 
-    public function detail()
-    {
-        return view('user.detail');
-    }
-
-    public function list()
-    {
-        return view('user.list');
-    }
 }
