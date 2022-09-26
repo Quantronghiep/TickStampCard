@@ -14,20 +14,22 @@
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper mx-auto">
+  @if ( session('error'))
+  <div class="alert alert-danger"> {{ session('error') }}  </div>
+@endif
     <!-- Main content -->
     <section class="content">
-      <div class="container-fluid">
-        <div class="row">
           <!-- left column -->
-          <div class="col-md-4">
+          <div class="col-md-4 mx-auto" style="margin-top: 100px">
             <!-- jquery validation -->
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">Quick Example <small>jQuery Validation</small></h3>
+                <h3 class="card-title">Login Admin</h3>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form id="quickForm">
+              <form id="quickForm" action="{{route('check_login')}}" method="POST">
+                @csrf
                 <div class="card-body">
                   <div class="form-group">
                     <label for="exampleInputEmail1">Email address</label>
@@ -39,26 +41,21 @@
                   </div>
                   <div class="form-group mb-0">
                     <div class="custom-control custom-checkbox">
-                      <input type="checkbox" name="terms" class="custom-control-input" id="exampleCheck1">
-                      <label class="custom-control-label" for="exampleCheck1">I agree to the <a href="#">terms of service</a>.</label>
+                      <input type="checkbox" name="remember" class="custom-control-input" id="remember">
+                      <label class="custom-control-label" for="remember">Remember me.</label>
                     </div>
                   </div>
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button type="submit" class="btn btn-primary">Login</button>
                 </div>
               </form>
             </div>
             <!-- /.card -->
             </div>
-
-
-          </div>
           <!--/.col (right) -->
         </div>
-        <!-- /.row -->
-      </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
 </div>

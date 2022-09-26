@@ -44,8 +44,8 @@
                     <img height="80" src="{{ asset('images/' . $app->logo) }}"/>
                     @endif
                 </td>
-                <td>{{echo date('d-m-Y H:i:s', strtotime($app->created_at)) }}</td>
-                <td>{{ echo !empty($app->updated_at) ? date('d-m-Y H:i:s', strtotime($app->updated_at)) : '--' }}</td>
+                <td>{{ date('d-m-Y H:i:s', strtotime($app->created_at)) }}</td>
+                <td>{{  !empty($app->updated_at) ? date('d-m-Y H:i:s', strtotime($app->updated_at)) : '--' }}</td>
                 <td>
                     <a href="/application/{{ $app->id }}">Detail</a>
                     <a href="/admin/application/{{ $app->id }}/edit">Edit</a>
