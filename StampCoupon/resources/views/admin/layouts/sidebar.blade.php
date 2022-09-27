@@ -41,7 +41,7 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-               @if(auth()->check() && auth()->user()->type == 1)
+               @if(auth()->check() && auth()->user()->type == Admin::TYPE_SYSTEM_ADMIN)
                <div class="form-group">
                 <label for="app_id">App quản lý</label>
                 <select name="app_id" class="form-control" id="app_id">
