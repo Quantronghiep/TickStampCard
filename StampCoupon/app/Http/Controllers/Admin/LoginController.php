@@ -15,6 +15,7 @@ class LoginController extends Controller
         'password' => $request->password,
         ])) {
         return redirect()->route('admin.home');
+       
         }
 
         return redirect()->route('admin.login')->with('error', 'FAILED LOGIN');
