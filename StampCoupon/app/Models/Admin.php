@@ -12,7 +12,7 @@ class Admin extends Authenticatable
 {
     CONST TYPE_SYSTEM_ADMIN = 1;
     CONST TYPE_APP_ADMIN = 0;
-    
+
     use HasFactory;
     protected $table = 'admins';
     protected $primaryKey = 'id';

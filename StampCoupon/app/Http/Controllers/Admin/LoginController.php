@@ -14,7 +14,9 @@ class LoginController extends Controller
         if (Auth::guard('admin')->attempt(['email' => $request->email,
         'password' => $request->password,
         ])) {
-            return redirect()->route('admin.home');
+
+        return redirect()->route('admin.home');
+       
         }
 
         return redirect()->route('admin.login')->with('error', 'FAILED LOGIN');
