@@ -50,7 +50,7 @@ class Application extends Model
             ]);
         }
         else{
-            $this->update(['app_name' => $this->name ]);
+            $appFindId->update(['app_name' => $this->name ]);
         }
     }
 
