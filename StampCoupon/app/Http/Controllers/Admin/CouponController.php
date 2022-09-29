@@ -26,7 +26,7 @@ class CouponController extends Controller
 
     public function store(CreateCouponRequest $request)
     {
-        $request->validated();
+        // $params = $request->validated();
         $params = $request->all();
         $params['image'] = $request->file('image');
        
