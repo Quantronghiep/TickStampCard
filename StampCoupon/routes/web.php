@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\ApplicationController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\LoginController;
+use App\Http\Controllers\Admin\StampController;
 use App\Http\Controllers\Web\WebController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
@@ -28,6 +29,7 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
     Route::resource('/admin', AdminController::class);
     Route::resource('/application', ApplicationController::class);
     Route::resource('/coupon', CouponController::class);
+    Route::resource('/stamp', StampController::class);
 });
 
 Route::prefix('web')->group(function(){

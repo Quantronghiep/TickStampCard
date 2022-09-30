@@ -33,9 +33,7 @@ class AdminController extends Controller
 
     public function store(AdminRequest $request)
     {
-        $request->validated();
         $params = $request->all();
-       
         $admin = new Admin();
         $admin->createAdmin($params);
         return redirect('admin/admin');
@@ -65,7 +63,7 @@ class AdminController extends Controller
 
     public function update(AdminRequest $request, $id)
     {
-        $request->validated();
+        // $request->validated();
         $admin = new Admin();
         $params = $request->all();
         $admin->updateAdmin($params,$id);

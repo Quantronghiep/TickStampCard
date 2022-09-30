@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Session;
+
 
 class Admin extends Authenticatable
 {
@@ -27,6 +29,7 @@ class Admin extends Authenticatable
     // join in eloquent
         return Admin::with('application')
             ->join('applications', 'admins.app_id', '=', 'applications.id')
+            ->where('applications.id', '=', Session::get('app_id'))
             ->get(['applications.app_name', 'admins.*']);
             // return DB::table('admins')
             //         ->join('applications','admins.app_id','=','applications.id')
