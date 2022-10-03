@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\StampController;
+use App\Http\Controllers\Admin\StoreController;
 use App\Http\Controllers\Web\WebController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
@@ -30,6 +31,9 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
     Route::resource('/application', ApplicationController::class);
     Route::resource('/coupon', CouponController::class);
     Route::resource('/stamp', StampController::class);
+    Route::get('/store/index', [StoreController::class, 'index'])->name('store.index');
+    Route::post('/store/import', [StoreController::class, 'import'])->name('store.import');
+
 });
 
 Route::prefix('web')->group(function(){
