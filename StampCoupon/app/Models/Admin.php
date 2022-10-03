@@ -29,12 +29,11 @@ class Admin extends Authenticatable
     // join in eloquent
         return Admin::with('application')
             ->join('applications', 'admins.app_id', '=', 'applications.id')
-            ->where('applications.id', '=', Session::get('app_id'))
             ->get(['applications.app_name', 'admins.*']);
-            // return DB::table('admins')
-            //         ->join('applications','admins.app_id','=','applications.id')
-            //         ->select('applications.app_name', 'admins.*')
-            //         ->get();
+        //    dd(DB::table('admins')
+        //             ->join('applications','admins.app_id','=','applications.id')
+        //             ->select('applications.app_name', 'admins.*')
+        //             ->get());
    }
 
    public function createAdmin($params = []){

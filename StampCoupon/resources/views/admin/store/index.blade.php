@@ -34,7 +34,7 @@
                             <a href=""  download="qrcode.png">
                                 <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')
                                     ->size(100)->errorCorrection('H')
-                                    ->generate(env('APP_URL') . '/'. 'name_store='.$item->name_store.'&app_id='.Session::get('app_id'))) !!} ">
+                                    ->generate(env('APP_URL') . '/'.'stamp-card/'. 'name_store='.$item->name_store.'&app_id='.Session::get('app_id'))) !!} ">
                             </a>
                             <p>Scan me to return to the QR Store</p>
                         </td>

@@ -5,9 +5,10 @@ namespace App\Imports;
 use App\Models\Store;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Illuminate\Support\Facades\Session;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 
-class StoresImport implements ToModel
+class StoresImport implements ToModel, WithHeadingRow
 {
     /**
     * @param array $row
@@ -17,8 +18,8 @@ class StoresImport implements ToModel
     public function model(array $row)
     {
         return new Store([
-            'name_store'     => $row[0],
-            'address'    => $row[1],
+            'name_store'     => $row['name'] ,
+            'address'    => $row['address'],
             'app_id' => Session::get('app_id')
         ]);
     }
