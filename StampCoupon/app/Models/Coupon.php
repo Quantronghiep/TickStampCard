@@ -25,10 +25,10 @@ class Coupon extends Model
 
     public function indexCoupon()
     {
-            return Coupon::with('application')
-                ->join('applications', 'coupons.app_id', '=', 'applications.id')
-                ->where('coupons.app_id', '=', Session::get('app_id'))
-                ->get(['applications.app_name', 'coupons.*']);
+        return Coupon::with('application')
+            ->join('applications', 'coupons.app_id', '=', 'applications.id')
+            ->where('coupons.app_id', '=', Session::get('app_id'))
+            ->get(['applications.app_name', 'coupons.*']);
     }
 
     public function createCoupon($params = [])
