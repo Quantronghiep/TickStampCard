@@ -11,13 +11,14 @@
 <a href="{{route('stamp.create')}}" class="btn btn-success">
     <i class="fa fa-plus"></i> Thêm mới Stamp
 </a>
+<a href="{{route('image.index')}}" class="btn btn-success">
+    <i class="fa fa-plus"></i>Setting Image Stamp
+</a>
 <table class="table table-bordered">
     <tr>
         <th>ID</th>
         <th>Max stamp</th>
         <th>Allow tick stamp many in one day</th>
-        <th>Image before</th>
-        <th>Image after</th>
         <th>App</th>
         <th>Created_at</th>
         <th>Updated_at</th>
@@ -30,16 +31,6 @@
                 <td>{{$stamp->max_stamp}}</td>
                 <td>
                     {{ $stamp->allow_many == 1 ? "Yes" : "No"}}
-                </td>
-                <td>
-                    @if(!empty($stamp->image_before))
-                    <img height="80" src="{{ asset('images/' . $stamp->image_before) }}"/>
-                    @endif
-                </td>
-                <td>
-                    @if(!empty($stamp->image_after))
-                    <img height="80" src="{{ asset('images/' . $stamp->image_after) }}"/>
-                    @endif
                 </td>
                 <td>{{ $stamp->app_name }}</td>
                 <td>{{ date('d-m-Y H:i:s', strtotime($stamp->created_at))}}</td>

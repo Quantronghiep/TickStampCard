@@ -7,7 +7,9 @@ use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\StampController;
 use App\Http\Controllers\Admin\StoreController;
+use App\Http\Controllers\Admin\ImageController;
 use App\Http\Controllers\Web\WebController;
+use App\Models\Image;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
@@ -31,6 +33,8 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
     Route::resource('/application', ApplicationController::class);
     Route::resource('/coupon', CouponController::class);
     Route::resource('/stamp', StampController::class);
+    Route::resource('/image', ImageController::class);
+    Route::get('/get-image/{stamp_id}', [ImageController::class, 'getImage']);
     Route::get('/store/index', [StoreController::class, 'index'])->name('store.index');
     Route::post('/store/import', [StoreController::class, 'import'])->name('store.import');
 

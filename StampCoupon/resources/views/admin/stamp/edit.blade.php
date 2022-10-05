@@ -18,22 +18,6 @@
             <input type="radio" name="allow_many" value="1" {{ ( $stamp->allow_many =="1")? "checked" : "" }} /> Yes
             <input type="radio" name="allow_many" value="0" {{ ( $stamp->allow_many =="0")? "checked" : "" }} /> No
         </div>
-        <div class="form-group">
-            <label class="">Image before</label>
-            <input type="file" class="form-input" name="image_before" value="{{ Request::old('image_before') }}" />
-            @if(!empty($stamp->image_before))
-            <img height="80" src="{{ asset('images/' . $stamp->image_before) }}"/>
-            @endif
-            <img src="#" id="img-preview" style="display: none" width="100" height="100" />
-        </div>
-        <div class="form-group">
-            <label class="">Image after</label>
-            <input type="file" class="form-input" name="image_after" value="{{ Request::old('image_after') }}" />
-            @if(!empty($stamp->image_after))
-            <img height="80" src="{{ asset('images/' . $stamp->image_after) }}"/>
-            @endif
-            <img src="#" id="img-preview" style="display: none" width="100" height="100" />
-        </div>
        
         <button type="submit" class="btn btn-primary">Save</button>
     </form>

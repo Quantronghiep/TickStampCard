@@ -33,15 +33,6 @@ class Coupon extends Model
 
     public function createCoupon($params = [])
     {
-        $max_stamp = DB::table('coupons')
-            ->join('applications', 'coupons.app_id', '=', 'applications.id')
-            ->join('stamps', 'applications.id', '=', 'stamps.app_id')
-            ->where('coupons.app_id', '=',  Session::get('app_id'))
-            ->select('stamps.max_stamp')
-            ->get();
-
-        $numberMaxStamp = $max_stamp[0]->max_stamp;
-
         $this->name = $params['name'];
         $this->image = $params['image'];
         if (!empty($this->image)) {
@@ -56,17 +47,7 @@ class Coupon extends Model
 
         $this->note_using = $params['note_using'];
         $this->app_id =  Session::get('app_id');
-
-        if ($this->number_accumulation > $numberMaxStamp) {
-            // dd('hehe');
-            // return redirect()->back()->with('error', 'error|There was an error...');
-            // Session::flash('error', 'This is a message!'); 
-            $error = "Number accumulation need <= $numberMaxStamp";
-            return  redirect()->route('coupon.store')->with('$error', $error);
-            // die();
-        } else {
-            $this->save();
-        }
+        $this->save();
     }
 
     public function updateCoupon($params = [], $id)
@@ -77,7 +58,7 @@ class Coupon extends Model
         $this->description = $params['description'];
         $this->number_accumulation = $params['number_accumulation'];
         $this->note_using = $params['note_using'];
-        $this->app_id = Auth()->user()->app_id;
+        $this->app_id = Session::get('app_id');
         $couponFindId = Coupon::find($id);
 
         $couponFindId->update([
@@ -85,7 +66,7 @@ class Coupon extends Model
             'description' => $this->description,
             'number_accumulation' => $this->number_accumulation,
             'note_using' => $this->note_using,
-            'app_id' => Auth()->user()->app_id,
+            'app_id' => Session::get('app_id'),
         ]);
 
         if (!empty($params['image'])) {

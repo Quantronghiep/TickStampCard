@@ -17,16 +17,6 @@
             <input type="radio" name="allow_many" value="1" {{ (Request::old('allow_many')=="1")? "checked" : "" }} /> Yes
             <input type="radio" name="allow_many" value="0" {{ (Request::old('allow_many')=="0")? "checked" : "" }} /> No
         </div>
-        <div class="form-group">
-            <label class="">Image before</label>
-            <input type="file" class="form-input" name="image_before" value="{{ Request::old('image_before') }}" />
-            <img src="#" id="img-preview" style="display: none" width="100" height="100" />
-        </div>
-        <div class="form-group">
-            <label class="">Image after</label>
-            <input type="file" class="form-input" name="image_after" value="{{ Request::old('image_after') }}" />
-            <img src="#" id="img-preview" style="display: none" width="100" height="100" />
-        </div>
        
         <button type="submit" class="btn btn-primary">Save</button>
     </form>
