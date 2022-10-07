@@ -7,7 +7,9 @@ use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\StampController;
 use App\Http\Controllers\Admin\StoreController;
+
 use App\Http\Controllers\Admin\ImageController;
+use App\Http\Controllers\Admin\TickCardController;
 use App\Http\Controllers\Web\WebController;
 use App\Models\Image;
 use Illuminate\Support\Facades\Route;
@@ -42,12 +44,14 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
 
 Route::prefix('web')->group(function(){
     Route::get('/',[WebController::class,'index']);
-});
-
-Route::prefix('web')->group(function(){
     Route::get('/detail',[WebController::class,'detail'])->name('web.detail');
+    Route::get('/list',[WebController::class,'list'])->name('web.list');
+    Route::get('/register_user', [TickCardController::class, 'registerUser'])->name('register_user');
 });
 
-Route::prefix('web')->group(function(){
-    Route::get('/list',[WebController::class,'list'])->name('web.list');
-});
+Route::get('/tick-card/app_id/{app_id}/name_store/{name_store}',[
+   TickCardController::class,
+   'index'
+]);
+
+Route::post('/check_register_user', [TickCardController::class, 'checkRegisterUser'])->name('check_register_user');

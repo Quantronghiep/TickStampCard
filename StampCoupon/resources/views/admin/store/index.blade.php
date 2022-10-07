@@ -31,12 +31,13 @@
                         <td>{{ $item->address }}</td>
                         {{-- <td>{!! QrCode::size(100)->generate(env('APP_URL') . '/'. 'name_store='.$item->name_store.'&app_id='.Session::get('app_id')) !!}</td> --}}
                         <td>
-                            <a href=""  download="qrcode.png">
+                            <a href="data:image/png;base64, {!! base64_encode(QrCode::format('png')
+                            ->size(100)->errorCorrection('H')
+                            ->generate(env('APP_URL') . '/'.'tick-card/'.'app_id='.Session::get('app_id'). '&name_store='.$item->name_store)) !!} "  download="qrcode.png">
                                 <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')
                                     ->size(100)->errorCorrection('H')
-                                    ->generate(env('APP_URL') . '/'.'stamp-card/'. 'name_store='.$item->name_store.'&app_id='.Session::get('app_id'))) !!} ">
+                                    ->generate(env('APP_URL') . '/'.'tick-card/app_id/'.Session::get('app_id'). '/' . 'name_store/'.$item->name_store)) !!} ">
                             </a>
-                            <p>Scan me to return to the QR Store</p>
                         </td>
                     </tr>
                 @endforeach
