@@ -43,7 +43,7 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
 });
 
 Route::prefix('web')->group(function(){
-    Route::get('/',[WebController::class,'index']);
+    Route::get('/',[WebController::class,'index'])->name('web');
     Route::get('/detail',[WebController::class,'detail'])->name('web.detail');
     Route::get('/list',[WebController::class,'list'])->name('web.list');
     Route::get('/register_user', [TickCardController::class, 'registerUser'])->name('register_user');

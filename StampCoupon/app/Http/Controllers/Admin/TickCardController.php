@@ -11,8 +11,7 @@ class TickCardController extends Controller
 {
     public function index($app_id, $name_store)
     {
-        // return  $app_id . 'Name store = ' . $name_store;
-        // LocalStorage.setItem('meomeo', 'Tiếng của con mèo');
+        
     }
 
     public function registerUser()
@@ -22,11 +21,17 @@ class TickCardController extends Controller
 
     public function checkRegisterUser(Request $request)
     {
-        $user = User::create([
-            'name' => '',
-            'phone_number' => $request['phone_number'],
+        $request->validate([
+            'phone_number' => 'required|numeric|digits:10'
         ]);
-        return $user->phone_number;
-       
+        $phoneNumberRequest = $request['phone_number'];
+        $checkUser = User::where('phone_number', $phoneNumberRequest)->first();
+        if (empty($checkUser)) {
+            User::create([
+                'name' => '',
+                'phone_number' => $request['phone_number'],
+            ]);
+        }
+        return $phoneNumberRequest;
     }
 }

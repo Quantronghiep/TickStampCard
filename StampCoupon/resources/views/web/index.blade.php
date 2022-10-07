@@ -9,18 +9,15 @@
             @endfor
 
         </div>
-        <p id="test"></p>
-
     </div>
 
     <script  type="text/javascript">
             var phoneNumber = localStorage.getItem('phoneNumber');
-            let url = "http://127.0.0.1:8000/";
+            let url = "{{route('register_user')}}";
+        
             if (!phoneNumber) {
-                window.location.href = `${url}` + "web/register_user";
-              // let url = "{{ env('APP_URL') }}/";
+                window.location.href = url;
             } else {
-            //   window.location.href = `${url}` + "web";
             }
         
     </script>

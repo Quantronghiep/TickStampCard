@@ -57,6 +57,13 @@
     <!-- /.content -->
     </div>
     <!-- ./wrapper -->
+    @if ($errors->any())
+    <ul>
+        @foreach ($errors->all() as $error)
+            <li class="alert alert-danger error">{{ $error }}</li>
+        @endforeach
+    </ul>
+@endif
 
 </body>
 
@@ -81,17 +88,15 @@
                     }, // serializes the form's elements.
                     success: function(data) {
                         localStorage.setItem('phoneNumber', data);
-                        let url = "http://127.0.0.1:8000/";
-                        window.location.href = `${url}` + "web";
-                        // alert('haha');
-
+                        window.location.href = "{{route('web')}}";
                     },
                     error: function(err) {
-                        console.log(err);
+                        alert(err['responseJSON']['message']);
                     }
                 })
             } catch (error) {
-                console.log(error);
+                alert(err['responseJSON']['message']);
+
             }
         });
     })
