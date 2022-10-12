@@ -33,7 +33,7 @@
                         <td>
                             <a href="data:image/png;base64, {!! base64_encode(QrCode::format('png')
                             ->size(100)->errorCorrection('H')
-                            ->generate(env('APP_URL') . '/'.'tick-card/'.'app_id='.Session::get('app_id'). '&name_store='.$item->name_store)) !!} "  download="qrcode.png">
+                            ->generate(env('APP_URL') . '/'.'tick-card/'.'app_id='.Session::get('app_id'). '/name_store='.$item->name_store)) !!} "  download="qrcode.png">
                                 <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')
                                     ->size(100)->errorCorrection('H')
                                     ->generate(env('APP_URL') . '/'.'tick-card/app_id/'.Session::get('app_id'). '/' . 'name_store/'.$item->name_store)) !!} ">

@@ -85,6 +85,16 @@ class Coupon extends Model
         }
     }
 
+    public function numberAccumulationCoupon()
+    {
+        // function get number_accumulation_coupon
+
+        $number_accumulation = Coupon::with('application') ->join('applications', 'coupons.app_id', '=', 'applications.id')
+        ->where('coupons.app_id', '=', Session::get('app_id'))->value('number_accumulation');
+           
+        return $number_accumulation; //5
+    }
+
     public function application()
     {
         return $this->belongsTo(Application::class);

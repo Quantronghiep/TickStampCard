@@ -43,15 +43,22 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
 });
 
 Route::prefix('web')->group(function(){
-    Route::get('/',[WebController::class,'index'])->name('web');
+    // Route::get('/',[WebController::class,'index']);
     Route::get('/detail',[WebController::class,'detail'])->name('web.detail');
     Route::get('/list',[WebController::class,'list'])->name('web.list');
     Route::get('/register_user', [TickCardController::class, 'registerUser'])->name('register_user');
+    Route::get('/dangKyLanDau', [TickCardController::class, 'dangKyLanDau'])->name('dangKyLanDau');
+    Route::get('/tickStampNext', [TickCardController::class, 'tickStampNext'])->name('tickStampNext');
 });
 
 Route::get('/tick-card/app_id/{app_id}/name_store/{name_store}',[
    TickCardController::class,
    'index'
-]);
+])->name('web');
+
+// Route::get('/tick-card/app_id/{app_id}/name_store/{name_store}',[
+//     TickCardController::class,
+//     'dangKyLanDau'
+//  ])->name('dangKyLanDau');
 
 Route::post('/check_register_user', [TickCardController::class, 'checkRegisterUser'])->name('check_register_user');

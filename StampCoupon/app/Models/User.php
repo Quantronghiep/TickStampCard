@@ -29,9 +29,9 @@ class User extends Authenticatable
         'phone_number',
     ];
 
-    public function users_apps()
+    public function apps()
     {
-        return $this->hasMany(User_App::class);
+        return $this->belongsToMany(Application::class,'users_apps','app_id','user_id');
     }
 
     public function users_coupons()

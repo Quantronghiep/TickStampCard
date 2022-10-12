@@ -111,7 +111,7 @@
                 </td>
                 <td>
                     
-                    <img height="80" src="${url + res[i].image_after}""/>
+                    <img height="80" src="${url + res[i].image_after}"/>
                   
                 </td>
                 <td>

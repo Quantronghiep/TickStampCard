@@ -71,13 +71,13 @@ class Application extends Model
         return $this->hasMany(Coupon::class);
     }
 
-     public function users_coupons()
+     public function users()
      {
-         return $this->hasMany(User_Coupon::class);
+         return $this->belongsToMany(User::class,'users_apps','user_id','app_id');
      }
 
-    public function users_apps()
-    {
-        return $this->hasMany(User_App::class);
-    }
+    // public function users_apps()
+    // {
+    //     return $this->hasMany(User_App::class);
+    // }
 }

@@ -84,11 +84,13 @@
                     url: actionUrl,
                     data: {
                         _token: tokenInput.val(),
-                        phone_number: phoneNumber
+                        phone_number: phoneNumber,
                     }, // serializes the form's elements.
                     success: function(data) {
                         localStorage.setItem('phoneNumber', data);
-                        window.location.href = "{{route('web')}}";
+                        console.log(data)
+                        url ="{{route('dangKyLanDau')}}" ;
+                        window.location.href = url;
                     },
                     error: function(err) {
                         alert(err['responseJSON']['message']);
