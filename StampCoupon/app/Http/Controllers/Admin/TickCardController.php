@@ -16,39 +16,6 @@ class TickCardController extends Controller
 {
     public function index($app_id, $name_store)
     {
-        // if( Session::get('user_id')){
-        //     Session::put('app_id', $app_id);
-        //     Session::put('name_store', $name_store);
-        //     //get max stamp
-        //     $stamp = new Stamp();
-        //     $max_stamp = $stamp->numberMaxStamp(); // 10
-        //     //get user id theo phonenumber
-        //     // dd(Session::get('phone_number'));
-        //     $userId = DB::table('users')->where('phone_number', '=',  Session::get('phone_number'))
-        //         ->value('id');
-        //     // dd($userId);
-        //     // //get amount stamp have
-        //     $amount_stamp = DB::table('users_apps')->where('user_id', '=', Session::get('user_id'))
-        //         ->where('app_id', '=', Session::get('app_id'))
-        //         ->value('amount');
-        //     //
-        //     //get image stamp
-        //     $imageStamp = Image::with('stamp')
-        //         ->join('stamps', 'images_stamp.stamp_id', '=', 'stamps.id')
-        //         ->where([
-        //             ['stamps.app_id', '=', $app_id]
-        //         ])
-        //         ->get(['images_stamp.*', 'stamps.id as stamp_id']);
-        //     // dd($imagesStamp);
-        //     return view('web.index', [
-        //         'max_stamp' => $max_stamp,
-        //         'imageStamp' => $imageStamp,
-        //         'amount_stamp' => $amount_stamp,
-        //     ]);
-        // }
-        // else{
-        //     return redirect()->route('register_user');
-        // }
         Session::put('app_id', $app_id);
         Session::put('name_store', $name_store);
         return view('web.index');
@@ -88,23 +55,31 @@ class TickCardController extends Controller
         $max_stamp = $stamp->numberMaxStamp(); // 10
 
         //get user id theo phonenumber
-        // dd(Session::get('phone_number'));
         $userId = DB::table('users')->where('phone_number', '=',  $request['phone_number'])
-            ->value('id');
-        // dd($userId);       
+            ->value('id');    
 
         // //get amount stamp have
         $amount_stamp = DB::table('users_apps')->where('user_id', '=',$userId)
             ->where('app_id', '=', Session::get('app_id'))
             ->value('amount');
 
+            //check status tick stamp : 1 or many on day
+        $statusTickStampOnDay = DB::table('stamps')->where('app_id','=',Session::get('app_id'))->value('allow_many');
+        if($statusTickStampOnDay == 1){
+            $amount_stamp += 1;
+            $success = '';
+        }
+        else{
+            $success = 'Moi ngay chi duoc tick 1 lan';
+        }
+
+        $coupon = new Coupon();
+        $numberAccumulation = $coupon->numberAccumulationCoupon();
+
         //update table users_apps amount+1
         $userAppUpdate = DB::table('users_apps')->where('user_id', '=',$userId)
         ->where('app_id', '=', Session::get('app_id'))
-        ->update(['amount' => $amount_stamp + 1]);
-        // dd($userAppUpdate);
-
-        // return $userAppUpdate;
+        ->update(['amount' => $amount_stamp]);
 
         //get image stamp
         $imageStamp = Image::with('stamp')
@@ -113,16 +88,13 @@ class TickCardController extends Controller
                 ['stamps.app_id', '=', Session::get('app_id')]
             ])
             ->get(['images_stamp.*', 'stamps.id as stamp_id']);
-        // dd($imagesStamp);
-        // return view('web.after_tick_stamp', [
-        //     'max_stamp' => $max_stamp,
-        //     'amount_stamp' => $amount_stamp + 1,
-        //     'imageStamp' => $imageStamp,
-        // ]);
+
         return response()->json([
             'max_stamp' => $max_stamp,
-            'amount_stamp' => $amount_stamp + 1,
+            'amount_stamp' => $amount_stamp,
             'imageStamp' => $imageStamp,
+            'number_accumulation' => $numberAccumulation,
+            'success' => $success
         ]);
     }
 
