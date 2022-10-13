@@ -39,9 +39,8 @@ class TickCardController extends Controller
                 ['stamps.app_id', '=', Session::get('app_id')]
             ])
             ->get(['images_stamp.*', 'stamps.id as stamp_id']);
-        // dd($imagesStamp);
 
-        return view('web.index', [
+        return view('web.sau_khi_dang_ki', [
             'max_stamp' => $max_stamp,
             'amount_stamp' => $amount_stamp,
             'imageStamp' => $imageStamp,
@@ -63,7 +62,12 @@ class TickCardController extends Controller
             ->where('app_id', '=', Session::get('app_id'))
             ->value('amount');
 
-            //check status tick stamp : 1 or many on day
+        //reset stamp when tick max stamp
+        if($amount_stamp  == $max_stamp){
+            $amount_stamp = 0 ;
+        }
+
+            //check status tick stamp : 1 or many on day 
         $statusTickStampOnDay = DB::table('stamps')->where('app_id','=',Session::get('app_id'))->value('allow_many');
         if($statusTickStampOnDay == 1){
             $amount_stamp += 1;
