@@ -41,8 +41,8 @@
                 <td>{{ !empty($coupon->updated_at) ? date('d-m-Y H:i:s', strtotime($coupon->updated_at)) : '--' }}</td>
 
                 <td>
-                    <a href="/coupon/{{ $coupon->id }}">Detail</a>
-                    <a href="/admin/coupon/{{ $coupon->id }}/edit">Edit</a>
+                    <a class="btn btn-primary" href="/coupon/{{ $coupon->id }}">Detail</a>
+                    <a class="btn btn-info" href="/admin/coupon/{{ $coupon->id }}/edit">Edit</a>
                     <form action="{{url('admin/coupon/'.$coupon->id)}}" method="post">
                         @csrf
                         @method('DELETE')

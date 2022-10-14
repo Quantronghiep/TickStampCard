@@ -55,35 +55,63 @@ class TickCardController extends Controller
 
         //get user id theo phonenumber
         $userId = DB::table('users')->where('phone_number', '=',  $request['phone_number'])
-            ->value('id');    
+            ->value('id');
+
+        Session::put('user_id', $userId);
+
 
         // //get amount stamp have
-        $amount_stamp = DB::table('users_apps')->where('user_id', '=',$userId)
+        $amount_stamp = DB::table('users_apps')->where('user_id', '=', $userId)
             ->where('app_id', '=', Session::get('app_id'))
             ->value('amount');
 
         //reset stamp when tick max stamp
-        if($amount_stamp  == $max_stamp){
-            $amount_stamp = 0 ;
+        if ($amount_stamp  == $max_stamp) {
+            $amount_stamp = 0;
         }
 
-            //check status tick stamp : 1 or many on day 
-        $statusTickStampOnDay = DB::table('stamps')->where('app_id','=',Session::get('app_id'))->value('allow_many');
-        if($statusTickStampOnDay == 1){
+        //check status tick stamp : 1 or many on day 
+        $statusTickStampOnDay = DB::table('stamps')->where('app_id', '=', Session::get('app_id'))->value('allow_many');
+        if ($statusTickStampOnDay == 1) {
             $amount_stamp += 1;
             $success = '';
-        }
-        else{
+        } else {
             $success = 'Moi ngay chi duoc tick 1 lan';
         }
 
+        //get number coupon cần tích
         $coupon = new Coupon();
         $numberAccumulation = $coupon->numberAccumulationCoupon();
 
+        //get coupon theo app_id
+        $couponByAppId = Coupon::with('application')
+            ->join('applications', 'coupons.app_id', '=', 'applications.id')
+            ->where('coupons.app_id', '=', Session::get('app_id'))
+            ->first();
+
+        //Save table Users_Coupons when receive coupon
+        if ($amount_stamp % $numberAccumulation == 0) {
+            $user_coupon_id = DB::table('users_coupons')->insertGetId([
+                'user_id' => $userId,
+                'coupon_id' => $couponByAppId->id,
+                'app_id' =>  Session::get('app_id'),
+                'name' => $couponByAppId->name,
+                'image' => $couponByAppId->image,
+                'description' => $couponByAppId->description,
+                'number_accumulation' => $numberAccumulation,
+                'note_using' => $couponByAppId->note_using,
+                'status' => 0 // chua su dung
+            ]);
+                    
+         //set users_coupons id 
+         Session::put('user_coupon_id', $user_coupon_id);
+        }
+
+
         //update table users_apps amount+1
-        $userAppUpdate = DB::table('users_apps')->where('user_id', '=',$userId)
-        ->where('app_id', '=', Session::get('app_id'))
-        ->update(['amount' => $amount_stamp]);
+        $userAppUpdate = DB::table('users_apps')->where('user_id', '=', $userId)
+            ->where('app_id', '=', Session::get('app_id'))
+            ->update(['amount' => $amount_stamp]);
 
         //get image stamp
         $imageStamp = Image::with('stamp')
@@ -98,6 +126,7 @@ class TickCardController extends Controller
             'amount_stamp' => $amount_stamp,
             'imageStamp' => $imageStamp,
             'number_accumulation' => $numberAccumulation,
+            'couponByAppId' => $couponByAppId,
             'success' => $success
         ]);
     }

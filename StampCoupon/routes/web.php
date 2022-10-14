@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\StampController;
 use App\Http\Controllers\Admin\StoreController;
 
 use App\Http\Controllers\Admin\ImageController;
+use App\Http\Controllers\Admin\IssueCoupon;
 use App\Http\Controllers\Admin\TickCardController;
 use App\Http\Controllers\Web\WebController;
 use App\Models\Image;
@@ -49,6 +50,9 @@ Route::prefix('web')->group(function(){
     Route::get('/register_user', [TickCardController::class, 'registerUser'])->name('register_user');
     Route::get('/dangKyLanDau', [TickCardController::class, 'dangKyLanDau'])->name('dangKyLanDau');
     Route::get('/tickStampNext', [TickCardController::class, 'tickStampNext'])->name('tickStampNext');
+    Route::get('/coupon-detail/{id}', [IssueCoupon::class, 'couponDetail'])->name('coupon-detail');
+    Route::get('/list-coupon-receive', [IssueCoupon::class, 'listCouponReceive'])->name('list-coupon-receive');
+    Route::put('/updateStatusUseCoupon', [IssueCoupon::class, 'updateStatusUseCoupon'])->name('updateStatusUseCoupon');
 });
 
 Route::get('/tick-card/app_id/{app_id}/name_store/{name_store}',[
