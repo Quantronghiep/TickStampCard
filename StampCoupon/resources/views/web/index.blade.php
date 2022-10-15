@@ -5,7 +5,7 @@
     <div id="popup"></div>
 
     <div class="mt-10 mx-auto">
-        <div class="notice"></div>
+        <div id="notice"></div>
 
         <div class="grid grid-cols-5 gap-4" id="result">
             @if (!empty($max_stamp) && !empty($imageStamp))
@@ -31,6 +31,7 @@
             window.location.href = "{{ route('register_user') }}";
         } else {
             try {
+
                 $.ajax({
                     type: "GET",
                     url: "{{ route('tickStampNext') }}",
@@ -39,6 +40,7 @@
                     }, // serializes the form's elements.
                     success: function(data) {
                         console.log(data)
+        
                         let html = ``;
                         let popup = ``;
                         let url = "{{ asset('images') }}/";
@@ -71,7 +73,7 @@
         </div>
     </div>`
                         }
-                        $("#notice").html(`    <h6 class="alert alert-success">{{ session('success') }}</h6>`);
+                        $("#notice").html(`    <h6 class="alert alert-success">${ data.success }</h6>`);
                         $("#result").html(html);
                         $("#popup").html(popup);
                     },

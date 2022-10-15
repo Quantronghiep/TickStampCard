@@ -46,19 +46,6 @@
                 <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                 @if (auth()->check() && auth()->user()->type == Admin::TYPE_SYSTEM_ADMIN)
-                    <div class="form-group">
-                        <label for="app_id">App quản lý</label>
-                        <select name="app_id" class="form-control" id="app_id">
-                            @if (!empty($apps))
-
-                                @foreach ($apps as $app)
-                                    <option value="{{ $app->id }}">
-                                        {{ $app->app_name }}
-                                    </option>
-                                @endforeach
-                            @endif
-                        </select>
-                    </div>
                     <li class="nav-item">
                         <a href="{{ route('admin.index') }}" class="nav-link">
                             <i class="nav-icon far fa-image"></i>
@@ -117,3 +104,4 @@
     </div>
     <!-- /.sidebar -->
 </aside>
+

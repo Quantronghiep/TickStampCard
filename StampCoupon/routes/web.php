@@ -32,6 +32,8 @@ Route::get('/logout', [LoginController::class, 'logout'])->name('admin.logout');
 
 Route::prefix('admin')->middleware('auth:admin')->group(function () {
     Route::get('index', [HomeController::class, 'index'])->name('admin.home');
+    Route::get('getApp', [HomeController::class, 'getApp'])->name('admin.getApp');
+    Route::get('setAppId', [HomeController::class, 'setAppId'])->name('setAppId');
     Route::resource('/admin', AdminController::class);
     Route::resource('/application', ApplicationController::class);
     Route::resource('/coupon', CouponController::class);
@@ -52,6 +54,7 @@ Route::prefix('web')->group(function(){
     Route::get('/tickStampNext', [TickCardController::class, 'tickStampNext'])->name('tickStampNext');
     Route::get('/coupon-detail/{id}', [IssueCoupon::class, 'couponDetail'])->name('coupon-detail');
     Route::get('/list-coupon-receive', [IssueCoupon::class, 'listCouponReceive'])->name('list-coupon-receive');
+    Route::put('/updateStatus', [IssueCoupon::class, 'updateStatus'])->name('updateStatus');
     Route::put('/updateStatusUseCoupon', [IssueCoupon::class, 'updateStatusUseCoupon'])->name('updateStatusUseCoupon');
 });
 

@@ -28,7 +28,7 @@
                     });
                     $.ajax({
                         type: "PUT",
-                        url:" {{ route('updateStatusUseCoupon') }}",
+                        url:" {{ route('updateStatus') }}",
                         success: function(data) {
                             alert(data);
                         }

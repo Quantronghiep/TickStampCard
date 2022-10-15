@@ -81,7 +81,7 @@ class Coupon extends Model
                 'image' => $generatedImage
             ]);
         } else {
-            $couponFindId->update(['image' => '']);
+            $couponFindId->update(['image' => $couponFindId['image']]);
         }
     }
 

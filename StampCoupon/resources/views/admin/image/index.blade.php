@@ -80,7 +80,7 @@
     @endif
 </table>
 
-<script>
+{{-- <script>
     $(function () {
     $('#stamp_id').on('change', function(e) { 
         var stamp_id = $(this).val(); //lấy stamp_id
@@ -137,7 +137,7 @@
 });
 
 
-</script>
+</script> --}}
 
 
 @endsection

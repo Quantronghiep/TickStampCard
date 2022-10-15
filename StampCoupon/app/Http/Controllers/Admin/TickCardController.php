@@ -18,6 +18,21 @@ class TickCardController extends Controller
     {
         Session::put('app_id', $app_id);
         Session::put('name_store', $name_store);
+
+        if (Session::get('user_id')) {
+            //truong hop sdt ở local storage => user_id có liên kết với app_id
+            $checkUserIdByAppIdInTableUsersApps = DB::table('users_apps')->where('user_id', '=', Session::get('user_id'))
+                ->where('app_id', '=', Session::get('app_id'))->first();
+
+            if (empty($checkUserIdByAppIdInTableUsersApps)) {
+                DB::table('users_apps')->insert([
+                    'user_id' => Session::get('user_id'),
+                    'app_id' => Session::get('app_id'),
+                    'amount' => 0,
+                ]);
+            }
+        }
+
         return view('web.index');
     }
 
@@ -60,6 +75,7 @@ class TickCardController extends Controller
         Session::put('user_id', $userId);
 
 
+
         // //get amount stamp have
         $amount_stamp = DB::table('users_apps')->where('user_id', '=', $userId)
             ->where('app_id', '=', Session::get('app_id'))
@@ -87,7 +103,7 @@ class TickCardController extends Controller
         $couponByAppId = Coupon::with('application')
             ->join('applications', 'coupons.app_id', '=', 'applications.id')
             ->where('coupons.app_id', '=', Session::get('app_id'))
-            ->first();
+            ->get(['coupons.*'])[0];
 
         //Save table Users_Coupons when receive coupon
         if ($amount_stamp % $numberAccumulation == 0) {
@@ -102,9 +118,9 @@ class TickCardController extends Controller
                 'note_using' => $couponByAppId->note_using,
                 'status' => 0 // chua su dung
             ]);
-                    
-         //set users_coupons id 
-         Session::put('user_coupon_id', $user_coupon_id);
+
+            //set users_coupons id 
+            Session::put('user_coupon_id', $user_coupon_id);
         }
 
 

@@ -14,12 +14,12 @@ class ImageController extends Controller
     public function index()
     {
         $stamps = new Stamp();
-        Session::put('stamp_id',  $stamps->first()->id);
+        $stamp_id = $stamps->getIdStampByAppId();
+        Session::put('stamp_id',  $stamp_id);
         $stamps = $stamps->indexStamp();
-        // dd($stamp_id);
         $images = new Image();
-        $images = $images->indexImage(Session::get('stamp_id'));
-        // dd($images);
+        // $images = $images->indexImage(Session::get('stamp_id'));
+        $images = $images->indexImage($stamp_id);
         return view('admin.image.index', [
             'images' => $images,
             'stamps' => $stamps

@@ -28,6 +28,12 @@ class Stamp extends Model
             ->get(['applications.app_name', 'stamps.*']);
     }
 
+    public function getIdStampByAppId()
+    {
+          return  DB::table('stamps')->where('app_id', '=', Session::get('app_id'))
+            ->value('id');
+    }
+
     public function createStamp($params = [])
     {
         $this->max_stamp = $params['max_stamp'];
