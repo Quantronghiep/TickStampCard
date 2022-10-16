@@ -10,6 +10,7 @@ use App\Models\Image;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use App\Models\Stamp;
+use Carbon\Carbon;
 
 
 class TickCardController extends Controller
@@ -86,13 +87,23 @@ class TickCardController extends Controller
             $amount_stamp = 0;
         }
 
-        //check status tick stamp : 1 or many on day 
+        //check status tick stamp : 1 or many on day ( 1 yes , 0 no)
         $statusTickStampOnDay = DB::table('stamps')->where('app_id', '=', Session::get('app_id'))->value('allow_many');
         if ($statusTickStampOnDay == 1) {
             $amount_stamp += 1;
             $success = '';
         } else {
-            $success = 'Moi ngay chi duoc tick 1 lan';
+
+            $updated_at = DB::table('users_apps')->where('user_id', '=', $userId)
+                ->where('app_id', '=', Session::get('app_id'))
+                ->value('updated_at');
+            if ((Carbon::now('Asia/Ho_Chi_Minh'))->diffInDays($updated_at) == 0) {
+                $success = 'Moi ngay chi duoc tick 1 lan';
+            } else {
+                $amount_stamp += 1;
+                $success = '';
+            }
+            // $success = (Carbon::now('Asia/Ho_Chi_Minh'))->diffInDays($updated_at);
         }
 
         //get number coupon cần tích
@@ -127,7 +138,10 @@ class TickCardController extends Controller
         //update table users_apps amount+1
         $userAppUpdate = DB::table('users_apps')->where('user_id', '=', $userId)
             ->where('app_id', '=', Session::get('app_id'))
-            ->update(['amount' => $amount_stamp]);
+            ->update([
+                'amount' => $amount_stamp,
+                'updated_at' => Carbon::now('Asia/Ho_Chi_Minh')
+            ]);
 
         //get image stamp
         $imageStamp = Image::with('stamp')
@@ -174,6 +188,8 @@ class TickCardController extends Controller
                 'user_id' => $user->id,
                 'app_id' => Session::get('app_id'),
                 'amount' => 1,
+                'created_at' => Carbon::now('Asia/Ho_Chi_Minh'),
+                'updated_at' => Carbon::now('Asia/Ho_Chi_Minh'),
             ]);
         }
 
