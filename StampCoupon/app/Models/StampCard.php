@@ -50,7 +50,7 @@ class StampCard extends Model
         ->where([
             ['stamps.app_id', '=', Session::get('app_id')]
         ])
-        ->skip($amount_stamp)->take($max_stamp)
+        ->skip($amount_stamp)->take($max_stamp-$amount_stamp)
         ->get(['images_stamp.image_before', 'images_stamp.image_after']);
     }
     
