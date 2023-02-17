@@ -19,7 +19,7 @@
             <label for="app_id">App quản lý</label>
             <select name="app_id" class="form-control" id="app_id">
                 @foreach($apps as $app)
-                <option value="{{ $app->id }}" >
+                <option {{$app->id == $admin->app_id ? 'selected': ''}} value="{{ $app->id }}" >
                     {{ $app->app_name }}
                 </option>
                 @endforeach

@@ -145,12 +145,19 @@
     </div>
         <div class="form-group" style="width: 600px ; margin:auto">
             <label for="app_id">App quản lý</label>
-            <div id="result"></div>
+            {{-- <div id="result"></div> --}}
             {{-- <select name="app_id" class="form-control" id="app_id">
-                <option value="${res.apps[i].id}">
+                <option {{session('app_id') == ${res.apps[i].id} ? 'selected':''}} value="${res.apps[i].id}">
                     ${res.apps[i].app_name}
                     </option>
             </select> --}}
+            <select name="app_id" class="form-control" id="app_id">
+                @foreach(\App\Models\Application::all() as $app)
+                <option {{session('app_id') == $app->id ? 'selected': ''}} value="{{$app->id}}">
+                    {{$app->app_name}}
+                    </option>
+                    @endforeach
+            </select>
         </div>
     @endif
 </nav>
@@ -160,22 +167,7 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-        $.ajax({
-                type: 'GET', // phương thức gửi
-                url: " {{ route('admin.getApp') }}",
-            }).done(function(res) {
-                console.log(res.apps);
-                let html = ``;
-                html += ` <select name="app_id" class="form-control" id="app_id">`;
-                for (var i = 0; i < res.apps.length; i++) { 
-                    html += ` <option value="${res.apps[i].id}">
-                        ${res.apps[i].app_name}
-                        </option>`
-                }
-                html += `</select>`;
-                $("#result").html(html);
-
-                
+       
         $('#app_id').on('change', function(e) {
             var app_id = $(this).val();
             $("#app_id").val(app_id);
@@ -187,10 +179,9 @@
                     app_id: app_id,
                 },
             }).done(function(res) {
+                location.reload();
                 console.log('set session app_id oke');
             })
         });
-            })
-
-    });
+            });
 </script>

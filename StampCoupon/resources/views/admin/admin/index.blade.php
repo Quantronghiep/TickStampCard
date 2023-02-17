@@ -46,7 +46,8 @@
 
                 <td>
                     <a href="/admin/{{ $admin->id }}">Detail</a>
-                    <a href="/admin/admin/{{ $admin->id }}/edit">Edit</a>
+                    {{-- <a href="/admin/admin/{{ $admin->id }}/edit">Edit</a> --}}
+                    <a href="{{route('admin.edit',$admin->id)}}">Edit</a>
                     <form action="{{url('admin/admin/'.$admin->id)}}" method="post">
                         @csrf
                         @method('DELETE')

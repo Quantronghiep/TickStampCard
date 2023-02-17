@@ -48,9 +48,9 @@ class AdminController extends Controller
     {
         $admin = Admin::find($id);
         $apps = Application::all();
-        // $app =  Admin::with('application')
+        // $admin =  Admin::with('application')
         // ->join('applications', 'admins.app_id', '=', 'applications.id')
-        // ->where('admins.app_id','=',$id)
+        // ->where('admins.id','=',$id)
         // ->get();
         // dd($admin);
         return view('admin.admin.edit',[
@@ -63,7 +63,7 @@ class AdminController extends Controller
 
     public function update(AdminRequest $request, $id)
     {
-        // $request->validated();
+        $request->validated();
         $admin = new Admin();
         $params = $request->all();
         $admin->updateAdmin($params,$id);

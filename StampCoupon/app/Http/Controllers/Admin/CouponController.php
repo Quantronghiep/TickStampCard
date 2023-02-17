@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateCouponRequest;
+use App\Models\Application;
 use App\Models\Coupon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,8 +15,9 @@ class CouponController extends Controller
     {
        $coupons = new Coupon();
        $coupons = $coupons->indexCoupon();
+       $apps = Application::all();
        return view('admin.coupon.index',[
-        'coupons' => $coupons,
+        'coupons' => $coupons, 'apps' => $apps,
     ]);
     }
 
@@ -44,8 +46,10 @@ class CouponController extends Controller
     public function edit($id)
     {
         $coupon = Coupon::find($id);
+       $apps = Application::all();
         return view('admin.coupon.edit',[
-            'coupon' => $coupon
+            'coupon' => $coupon,
+            'apps' => $apps,
         ]);
     }
 

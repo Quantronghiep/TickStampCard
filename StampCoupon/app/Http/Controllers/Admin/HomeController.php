@@ -17,10 +17,11 @@ class HomeController
         // dd(Session::get('app_id'));
         $apps = Application::all();
         // return response()->json(['apps' => $apps]);
-        // return view('admin.layouts.main',[
-        //     'apps' => $apps,
-        // ]);
-        return view('admin.layouts.main');
+        // dd($apps);
+        return view('admin.layouts.main',[
+            'apps' => $apps,
+        ]);
+        // return view('admin.layouts.main');
     }
     public function getApp()
     {

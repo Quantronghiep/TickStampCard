@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateStampRequest;
+use App\Models\Application;
 use App\Models\Stamp;
 use Illuminate\Http\Request;
 
@@ -14,8 +15,10 @@ class StampController extends Controller
     {
         $stamps = new Stamp();
         $stamps = $stamps->indexStamp();
+        $apps = Application::all();
         return view('admin.stamp.index',[
          'stamps' => $stamps,
+         'apps' => $apps,
      ]);
     }
 
